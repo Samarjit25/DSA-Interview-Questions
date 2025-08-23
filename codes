@@ -1,0 +1,14 @@
+//TWO SUM
+vector<int>twoSum(vector<int>&nums, int target){
+  int n=nums.size();
+  int l=0, r=n-1;
+  sort(nums.begin(),nums.end());
+  int sum;
+  while(l<r){
+    sum=nums[l]+nums[r];
+    if(sum==target) return {l,r};
+    else if(sum<target) l++;
+    else r++;
+  }
+  return {l,r};
+}
