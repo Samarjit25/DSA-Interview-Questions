@@ -856,24 +856,180 @@ vector<vector<int>> subsets(vector<int>& nums) {
         return result;
 }
 
+//PRODUCT OF ARRAY EXCEPT SELF
+vector<int> productExceptSelf(vector<int>& nums) {
+        vector<int> output(nums.size(), 1);
+        int left = 1 ;
+        for (int i = 0; i < nums.size(); i++) {
+            output[i] *= left;
+            left *= nums[i];
+        }
+        int right = 1;
+        for (int i = nums.size() - 1; i >= 0; i--) {
+            output[i] *= right;
+            right *= nums[i];
+        }
+        return output;        
+}
 
+//MAJORITY ELEMENT
+int majorityElement(vector<int>& nums) {
+        int n=nums.size();
+        int cnt=0;
+        int el;
+        for(int i=0;i<n;i++){
+            if(cnt==0){
+                cnt=1;
+                el=nums[i];
+            }
+            else if(nums[i]==el) cnt++;
+            else cnt--;
+        }
+        int cnt1=0;
+        for(int i=0;i<n;i++){
+            if(nums[i]==el) cnt1++;
+        }
+        if(cnt1>(n/2)) return el;
+        return -1;
+}
 
+//FIND THE DUPLICATE NUMBER
+int findDuplicate(std::vector<int>& nums) {
+        int slow = nums[0];
+        int fast = nums[0];
+        do {
+            slow = nums[slow];
+            fast = nums[nums[fast]];
+        } while (slow != fast);
+        slow = nums[0];
+        while (slow != fast) {
+            slow = nums[slow];
+            fast = nums[fast];
+        }
+        return slow;
+}
 
+//JUMP GAME
+bool canJump(vector<int>& nums) {
+        int n=nums.size();
+        int goal=n-1;
+        for(int i=n-2;i>=0;i--){
+            if(nums[i]+i>=goal) goal=i;
+        }
+        return goal==0;
+}
 
+//MAX PRODUCT SUBARRAY
+int maxProduct(vector<int>& nums) {
+        int maxi = INT_MIN;
+        int prod=1;
+        for(int i=0;i<nums.size();i++)
+        {
+          prod*=nums[i];
+          maxi=max(prod,maxi);
+          if(prod==0) prod=1;
+        }
+        prod=1;
+        for(int i=nums.size()-1;i>=0;i--)
+        {
+          prod*=nums[i];
+          maxi=max(prod,maxi);
+          if(prod==0) prod=1;
+        }
+        return maxi;
+}
 
+//ADD 2 NUMBERS
+ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
+        ListNode* dummy = new ListNode(); 
+        ListNode* cur = dummy;     
+        int carry = 0; 
+        while (l1 || l2 || carry) {
+            int sum = carry;     
+            if (l1) {
+                sum += l1->val;
+                l1 = l1->next;      
+            }
+            if (l2) {
+                sum += l2->val;
+                l2 = l2->next;        
+            }
+            carry = sum / 10;               
+            cur->next = new ListNode(sum % 10); 
+            cur = cur->next;       
+        }
+        return dummy->next;
+}
 
+//REMOVE NTH NODE FROM END OF LL
+ListNode* removeNthFromEnd(ListNode* head, int n) {
+        ListNode*fast=head;
+        ListNode* slow=head;
+        for(int i=0;i<n;i++){
+            fast=fast->next;
+        }
+        if(fast==NULL) return head->next;
+        while(fast->next!=NULL){
+            fast=fast->next;
+            slow=slow->next;
+        }
+        ListNode* delNode=slow->next;
+        slow->next=slow->next->next;
+        delete(delNode);
+        return head;
+}
 
+//PALINDROME LL
+bool isPalindrome(ListNode* head) {
+        stack<int> stack;
+        ListNode* curr = head;
+        while (curr) {
+            stack.push(curr->val);
+            curr = curr->next;
+        }
+        curr = head;
+        while (curr && curr->val == stack.top()) {
+            stack.pop();
+            curr = curr->next;
+        }
+        return curr == nullptr;
+}
 
+//SWAP NODES IN PAIRS
+ListNode* swapPairs(ListNode* head) { 
+        if(!head || !head->next) return head;
+        ListNode* dummy=new ListNode();
 
+        ListNode* prev=dummy;
+        ListNode* curr=head;
 
+        while(curr && curr->next){
+            prev->next =curr->next;
+            curr->next=prev->next->next;
+            prev->next->next=curr;
+            prev=curr;
+            curr=curr->next;
+        }
+        return dummy->next;
+}
 
-
-
-
-
-
-
-
+//COPY LIST WITH RANDOM POINTER
+Node* copyRandomList(Node* head) {
+        if (!head) return NULL;
+        unordered_map<Node*, Node*> new_L;
+        Node* curr = head;
+        while (curr) {
+            new_L[curr] = new Node(curr->val);
+            curr = curr->next;
+        } 
+        curr = head;
+        while (curr) {
+            new_L[curr]->next = new_L[curr->next];
+            new_L[curr]->random = new_L[curr->random];
+            curr = curr->next;
+        } 
+        return new_L[head];
+}
 
 
 
