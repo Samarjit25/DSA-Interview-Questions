@@ -143,6 +143,7 @@ int search(vector<int>& nums, int target) {
         return -1;
 }
 
+
 //FIRST AND LAST POSITION IN ARRAY
  vector<int> searchRange(vector<int>& nums, int target) {
         int start = -1, end = -1;
@@ -162,6 +163,7 @@ int search(vector<int>& nums, int target) {
         return {start, end};
 }
 
+
 //Kth LARGEST ELEMENT
 int findKthLargest(vector<int>& nums, int k) {
 
@@ -179,7 +181,14 @@ int findKthLargest(vector<int>& nums, int k) {
         return -1;
 }
 
-//SORT COLORS
+
+//SORT COLORS 
+void sortColors(vector<int>& nums){
+  sort(nums.begin(),nums.end());
+}
+
+//OR
+
 void sortColors(vector<int>& nums) {
     while(!is_sorted(nums.begin(),nums.end())){
       for(int i=0;i<nums.size()-1;i++){
